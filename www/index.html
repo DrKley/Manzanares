@@ -36,24 +36,15 @@
     }
 
     .logo-container {
-      width: 180px;
-      height: 180px;
+      width: 200px;
+      height: 200px;
       border-radius: 50%;
-      background: linear-gradient(145deg, #e94560, #ff6b6b);
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 10px 40px rgba(233, 69, 96, 0.4);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
       position: relative;
-    }
-
-    .logo-container::before {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      border: 3px solid rgba(255, 255, 255, 0.2);
+      overflow: hidden;
     }
 
     .logo-container.playing {
@@ -61,12 +52,14 @@
     }
 
     @keyframes pulse {
-      0%, 100% { transform: scale(1); box-shadow: 0 10px 40px rgba(233, 69, 96, 0.4); }
-      50% { transform: scale(1.05); box-shadow: 0 15px 50px rgba(233, 69, 96, 0.6); }
+      0%, 100% { transform: scale(1); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3); }
+      50% { transform: scale(1.05); box-shadow: 0 15px 50px rgba(0, 128, 0, 0.4); }
     }
 
-    .logo-icon {
-      font-size: 64px;
+    .logo-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .station-info {
@@ -102,20 +95,42 @@
       height: 80px;
       border-radius: 50%;
       border: none;
-      background: linear-gradient(145deg, #e94560, #ff6b6b);
+      background: linear-gradient(145deg, #2e8b57, #3cb371);
       color: white;
-      font-size: 32px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 5px 20px rgba(233, 69, 96, 0.4);
+      box-shadow: 0 5px 20px rgba(46, 139, 87, 0.4);
       transition: transform 0.2s, box-shadow 0.2s;
+      padding: 0;
+    }
+
+    .play-button svg {
+      width: 32px;
+      height: 32px;
+      fill: white;
+    }
+
+    .play-button .play-icon {
+      margin-left: 4px;
+    }
+
+    .play-button .pause-icon {
+      display: none;
+    }
+
+    .play-button.playing .play-icon {
+      display: none;
+    }
+
+    .play-button.playing .pause-icon {
+      display: block;
     }
 
     .play-button:hover {
       transform: scale(1.05);
-      box-shadow: 0 8px 25px rgba(233, 69, 96, 0.5);
+      box-shadow: 0 8px 25px rgba(46, 139, 87, 0.5);
     }
 
     .play-button:active {
@@ -157,19 +172,19 @@
       width: 18px;
       height: 18px;
       border-radius: 50%;
-      background: #e94560;
+      background: #2e8b57;
       cursor: pointer;
-      box-shadow: 0 2px 10px rgba(233, 69, 96, 0.4);
+      box-shadow: 0 2px 10px rgba(46, 139, 87, 0.4);
     }
 
     .volume-slider::-moz-range-thumb {
       width: 18px;
       height: 18px;
       border-radius: 50%;
-      background: #e94560;
+      background: #2e8b57;
       cursor: pointer;
       border: none;
-      box-shadow: 0 2px 10px rgba(233, 69, 96, 0.4);
+      box-shadow: 0 2px 10px rgba(46, 139, 87, 0.4);
     }
 
     .visualizer {
@@ -182,7 +197,7 @@
 
     .bar {
       width: 4px;
-      background: linear-gradient(to top, #e94560, #ff6b6b);
+      background: linear-gradient(to top, #2e8b57, #3cb371);
       border-radius: 2px;
       transition: height 0.1s ease;
     }
@@ -210,7 +225,7 @@
 <body>
   <div class="player-container">
     <div class="logo-container" id="logoContainer">
-      <span class="logo-icon">📻</span>
+      <img src="logo.png" alt="Manzanares Stereo" class="logo-img">
     </div>
 
     <div class="station-info">
@@ -228,7 +243,8 @@
 
     <div class="controls">
       <button class="play-button" id="playButton" aria-label="Reproducir">
-        <span id="playIcon">▶</span>
+        <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        <svg class="pause-icon" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
       </button>
     </div>
 
@@ -246,7 +262,6 @@
   <script>
     const audio = document.getElementById('radioPlayer');
     const playButton = document.getElementById('playButton');
-    const playIcon = document.getElementById('playIcon');
     const volumeSlider = document.getElementById('volumeSlider');
     const stationStatus = document.getElementById('stationStatus');
     const visualizer = document.getElementById('visualizer');
@@ -275,15 +290,16 @@
 
     function updateUI(playing) {
       isPlaying = playing;
-      playIcon.textContent = playing ? '⏸' : '▶';
       playButton.disabled = false;
 
       if (playing) {
+        playButton.classList.add('playing');
         stationStatus.textContent = 'En Vivo';
         stationStatus.classList.add('live');
         visualizer.classList.add('active');
         logoContainer.classList.add('playing');
       } else {
+        playButton.classList.remove('playing');
         stationStatus.textContent = 'Detenido';
         stationStatus.classList.remove('live');
         visualizer.classList.remove('active');
