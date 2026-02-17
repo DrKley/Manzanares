@@ -1,0 +1,29 @@
+.home-container {
+  min-height: 100%;
+}
+
+.scroll-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 20px;
+  color: rgba(255, 255, 255, 0.5);
+  animation: bounce 2s ease-in-out infinite;
+}
+
+.scroll-indicator span {
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+.chevron-down {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}

@@ -1,0 +1,22 @@
+:root {
+  --ion-background-color: #1a1a2e;
+  --ion-text-color: #ffffff;
+  --ion-color-primary: #2e8b57;
+  --ion-color-primary-rgb: 46, 139, 87;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-shade: #267a4c;
+  --ion-color-primary-tint: #439768;
+}
+
+body {
+  background: linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  min-height: 100vh;
+}
+
+ion-content {
+  --background: transparent;
+}
+
+ion-content::part(background) {
+  background: linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+}
